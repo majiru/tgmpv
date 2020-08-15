@@ -1,10 +1,10 @@
 Tgmpv is a telegram bot for playing videos to a running mpv instance over it's IPC socket.
 
 mpv can be started to use the IPC socket like this:
-mpv --idle --input-unix-socket=/tmp/mpv_socket --keep-open=yes
+mpv --idle --input-ipc-server=/tmp/mpv_socket --keep-open=yes
 
 Due to the nature of telegram bots, there are ways of restricting the access to play content to mpv.
-tgmpv can take a -users flag which is a comma seperated list of telegram usernamse that are allowed to play
+Tgmpv can take a -users flag which is a comma seperated list of telegram usernamse that are allowed to play
 as well as -group which whitelists a single group ID for use. If both of these are defined then the bot
 checks both values for authorization. If neither is supplied then there is no checks made.
 
