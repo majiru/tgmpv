@@ -1,0 +1,29 @@
+Tgmpv is a telegram bot for playing videos to a running mpv instance over it's IPC socket.
+
+mpv can be started to use the IPC socket like this:
+mpv --idle --input-unix-socket=/tmp/mpv_socket --keep-open=yes
+
+Due to the nature of telegram bots, there are ways of restricting the access to play content to mpv.
+tgmpv can take a -users flag which is a comma seperated list of telegram usernamse that are allowed to play
+as well as -group which whitelists a single group ID for use. If both of these are defined then the bot
+checks both values for authorization. If neither is supplied then there is no checks made.
+
+The library may be defined with the -lib flag. This is used in the /list and /listi commands.
+
+The bot token must be defined with the BOTTOKEN enviornment variable.
+
+Commands:
+/list <search string>:		Searches the library folder for files that optionally match the search query. The resulted in returned to the user.
+				The results are printed alongside index numbers, the numbers may be used in substitute of the file names
+				for the /listi and /playi commands.
+/listi <index> <search string>:	List the subfolder of the library based on the index of the previous list operation.
+
+/play url-or-filename:		Loads the file in to mpv through the use of the loadfile IPC command.
+/playi:				Loads the file identified by the index of the last list operation in to MPV.
+
+Example:
+BOTTOKEN=<token> ./tgmpv -users myusername -lib $HOME/videos
+
+A call to /list will list all of the files and folders in the library directory.
+A subsequent call to /listi 0 will list the contents of the first result assuming it is a folder.
+A subsequent call to /playi 0 will play the first file found in the subfolder.
